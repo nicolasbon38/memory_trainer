@@ -7,7 +7,7 @@ Récupère le nom de l'image si on respacte la convention de nommage des fichier
 String path_dossier = "/home/nicolas/boulot/memory_trainer/premiers_ministres";
 
 float DIMENSION = 500;
-float[][] les_spots = { {floor(21 * DIMENSION / 8), 3 * DIMENSION / 8, DIMENSION / 4}, {2 * DIMENSION, DIMENSION / 4, DIMENSION / 2 }, {floor(9 * DIMENSION / 8), DIMENSION / 8, 3 * DIMENSION / 4}, {floor(DIMENSION / 2), DIMENSION / 4, DIMENSION / 2}, {floor(DIMENSION / 8), 3 * DIMENSION / 8, DIMENSION / 4}, {-1 * DIMENSION / 8, DIMENSION / 2, 0} };
+float[][] les_spots = {{floor(21 * DIMENSION / 8), 3 * DIMENSION / 8, DIMENSION / 4}, {2 * DIMENSION, DIMENSION / 4, DIMENSION / 2 }, {floor(9 * DIMENSION / 8), DIMENSION / 8, 3 * DIMENSION / 4}, {floor(DIMENSION / 2), DIMENSION / 4, DIMENSION / 2}, {floor(DIMENSION / 8), 3 * DIMENSION / 8, DIMENSION / 4}, {-1 * DIMENSION / 8, DIMENSION / 2, 0}};
 
 boolean defilement_actif = false;
 
@@ -29,7 +29,6 @@ class Image{
     path = le_path;
     img = loadImage(path);
     nom = get_name();
-    println(nom);
   }
 
 
@@ -59,9 +58,6 @@ class Image{
     image(img, x, y, largeur, largeur);
   }
 
-  public void finalize(){
-  }
-
   void maj_rang(){
     if (x <= les_spots[rang + 1][0]){
       rang = rang + 1;
@@ -72,12 +68,11 @@ class Image{
   }
 
   void bouge(){
-    if (rang == 5){
-      rang = 0;
-      x = 21 * DIMENSION / 8;
-      y = 3 * DIMENSION / 8;
-      largeur = DIMENSION / 4;
-    }
+    if (rang < 5){
+      // rang = 0;
+      // x = 21 * DIMENSION / 8;
+      // y = 3 * DIMENSION / 8;
+      // largeur = DIMENSION / 4;
     //On recouvre l'image précédente
     noStroke();
     rect(x - 1, y - 1, largeur + 2, largeur + 2);
@@ -89,6 +84,7 @@ class Image{
     y = y + dy;
     largeur = largeur + dl;
     maj_rang();
+  }
   }
 }
 
@@ -112,7 +108,7 @@ class Train{
 
   void initialise_affichage(){
     assert longueur > 4:" Pas assez d'image";
-    for (int i=0; i < 5; i++){
+    for (int i=0; i < longueur; i++){
       les_images[i].x = les_spots[i][0];
       les_images[i].y = les_spots[i][1];
       les_images[i].largeur = les_spots[i][2];

@@ -14,10 +14,16 @@ import java.io.IOException;
 
 public class prototype_avec_images extends PApplet {
 
+/*
+Bout de code processing chargeant les images, et les faisant défiler à chaque appui sur la touche A
+Récupère le nom de l'image si on respacte la convention de nommage des fichiers
+*/
+
+
 String path_dossier = "/home/nicolas/boulot/memory_trainer/premiers_ministres";
 
 float DIMENSION = 500;
-float[][] les_spots = { {floor(21 * DIMENSION / 8), 3 * DIMENSION / 8, DIMENSION / 4}, {2 * DIMENSION, DIMENSION / 4, DIMENSION / 2 }, {floor(9 * DIMENSION / 8), DIMENSION / 8, 3 * DIMENSION / 4}, {floor(DIMENSION / 2), DIMENSION / 4, DIMENSION / 2}, {floor(DIMENSION / 8), 3 * DIMENSION / 8, DIMENSION / 4}, {-1 * DIMENSION / 8, DIMENSION / 2, 0} };
+float[][] les_spots = {{floor(21 * DIMENSION / 8), 3 * DIMENSION / 8, DIMENSION / 4}, {2 * DIMENSION, DIMENSION / 4, DIMENSION / 2 }, {floor(9 * DIMENSION / 8), DIMENSION / 8, 3 * DIMENSION / 4}, {floor(DIMENSION / 2), DIMENSION / 4, DIMENSION / 2}, {floor(DIMENSION / 8), 3 * DIMENSION / 8, DIMENSION / 4}, {-1 * DIMENSION / 8, DIMENSION / 2, 0}};
 
 boolean defilement_actif = false;
 
@@ -39,7 +45,6 @@ class Image{
     path = le_path;
     img = loadImage(path);
     nom = get_name();
-    println(nom);
   }
 
 
@@ -60,18 +65,13 @@ class Image{
     while (name.charAt(j) != ' '){
       j = j + 1;
     }
-  name = name.substring(j + 1);
-    println("cghvjbkl");
-
+    name = name.substring(j + 1);
     return(name);
   }
 
 
   public void display(){
     image(img, x, y, largeur, largeur);
-  }
-
-  public void finalize(){
   }
 
   public void maj_rang(){
@@ -84,12 +84,11 @@ class Image{
   }
 
   public void bouge(){
-    if (rang == 5){
-      rang = 0;
-      x = 21 * DIMENSION / 8;
-      y = 3 * DIMENSION / 8;
-      largeur = DIMENSION / 4;
-    }
+    if (rang < 5){
+      // rang = 0;
+      // x = 21 * DIMENSION / 8;
+      // y = 3 * DIMENSION / 8;
+      // largeur = DIMENSION / 4;
     //On recouvre l'image précédente
     noStroke();
     rect(x - 1, y - 1, largeur + 2, largeur + 2);
@@ -101,6 +100,7 @@ class Image{
     y = y + dy;
     largeur = largeur + dl;
     maj_rang();
+  }
   }
 }
 
