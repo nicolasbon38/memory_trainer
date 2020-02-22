@@ -17,7 +17,7 @@ public class prototype_avec_images extends PApplet {
 String path_dossier = "/home/nicolas/boulot/memory_trainer/premiers_ministres";
 
 float DIMENSION = 500;
-float[][] les_spots = { {21 * DIMENSION / 8, 3 * DIMENSION / 8, DIMENSION / 4}, {2 * DIMENSION, DIMENSION / 4, DIMENSION / 2 }, {9 * DIMENSION / 8, DIMENSION / 8, 3 * DIMENSION / 4}, {DIMENSION / 2, DIMENSION / 4, DIMENSION / 2}, {DIMENSION / 8, 3 * DIMENSION / 8, DIMENSION / 4}, {-1 * DIMENSION / 8, DIMENSION / 2, 0} };
+float[][] les_spots = { {floor(21 * DIMENSION / 8), 3 * DIMENSION / 8, DIMENSION / 4}, {2 * DIMENSION, DIMENSION / 4, DIMENSION / 2 }, {floor(9 * DIMENSION / 8), DIMENSION / 8, 3 * DIMENSION / 4}, {floor(DIMENSION / 2), DIMENSION / 4, DIMENSION / 2}, {floor(DIMENSION / 8), 3 * DIMENSION / 8, DIMENSION / 4}, {-1 * DIMENSION / 8, DIMENSION / 2, 0} };
 
 boolean defilement_actif = false;
 
@@ -38,7 +38,34 @@ class Image{
     largeur = DIMENSION / 4;
     path = le_path;
     img = loadImage(path);
+    nom = get_name();
+    println(nom);
   }
+
+
+  public String get_name(){
+    //le nom du fichier doit être séparé par _, commencer par un chiffre
+    int i = path.length() - 1;
+    String name = "";
+    while (path.charAt(i) != '/'){
+      if (path.charAt(i) == '_'){
+        name = " " + name;
+      }
+      else{
+        name = String.valueOf(path.charAt(i)) + name;
+      }
+      i = i - 1;
+    }
+    int j = 0;
+    while (name.charAt(j) != ' '){
+      j = j + 1;
+    }
+  name = name.substring(j + 1);
+    println("cghvjbkl");
+
+    return(name);
+  }
+
 
   public void display(){
     image(img, x, y, largeur, largeur);
@@ -48,8 +75,11 @@ class Image{
   }
 
   public void maj_rang(){
-    if (x < les_spots[rang + 1][0]){
+    if (x <= les_spots[rang + 1][0]){
       rang = rang + 1;
+      if (rang == 3){ //3 est une valeur arbitraire, c'est juste que sinon il s'arrête plusieurs fois
+        defilement_actif = false;
+      }
     };
   }
 
@@ -64,7 +94,7 @@ class Image{
     noStroke();
     rect(x - 1, y - 1, largeur + 2, largeur + 2);
     fill(255);
-    float dx = (les_spots[rang + 1][0] - les_spots[rang][0]) / 30;
+    float dx = floor(les_spots[rang + 1][0] - les_spots[rang][0]) / 30;
     float dy = (les_spots[rang + 1][1] - les_spots[rang][1]) / 30;
     float dl = (les_spots[rang + 1][2] - les_spots[rang][2]) / 30;
     x = x + dx;
@@ -137,11 +167,7 @@ public void draw(){
 public void keyPressed(){
   if (key == 'a'){
     defilement_actif = true;
-  };
-}
-
-public void keyReleased(){
-  defilement_actif = false;
+  }
 }
   public void settings() {  size(1500, 500);  smooth(); }
   static public void main(String[] passedArgs) {
