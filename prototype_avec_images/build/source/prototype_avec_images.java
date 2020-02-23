@@ -29,6 +29,10 @@ boolean defilement_actif = false;
 
 Train le_train;
 
+TextBox la_textbox;
+
+String reponse = "";
+
 
 class Image{
   String nom;
@@ -91,8 +95,8 @@ class Image{
       // largeur = DIMENSION / 4;
     //On recouvre l'image précédente
     noStroke();
-    rect(x - 1, y - 1, largeur + 2, largeur + 2);
     fill(255);
+    rect(x - 1, y - 1, largeur + 2, largeur + 2);
     float dx = floor(les_spots[rang + 1][0] - les_spots[rang][0]) / 30;
     float dy = (les_spots[rang + 1][1] - les_spots[rang][1]) / 30;
     float dl = (les_spots[rang + 1][2] - les_spots[rang][2]) / 30;
@@ -124,7 +128,7 @@ class Train{
 
   public void initialise_affichage(){
     assert longueur > 4:" Pas assez d'image";
-    for (int i=0; i < 5; i++){
+    for (int i=0; i < longueur; i++){
       les_images[i].x = les_spots[i][0];
       les_images[i].y = les_spots[i][1];
       les_images[i].largeur = les_spots[i][2];
@@ -154,6 +158,7 @@ public void setup(){
   
   le_train = new Train(path_dossier);
   le_train.initialise_affichage();
+  la_textbox = new TextBox();
 }
 
 
@@ -162,11 +167,34 @@ public void draw(){
     le_train.defile();
   };
   le_train.train_display();
+  la_textbox.display();
+
 }
 
 public void keyPressed(){
-  if (key == 'a'){
+  if (key == ENTER){
     defilement_actif = true;
+    reponse = "";
+  }
+  reponse = reponse + String.valueOf(key);
+}
+class TextBox{
+
+  float x_t;
+  float y_t;
+  String texte;
+
+  TextBox(){
+    x_t = 50;
+    y_t = 50;
+    texte = "";
+  }
+
+  public void display(){
+    texte = reponse;
+    textSize(40);
+    text(texte, x_t, y_t);
+    fill(100, 0, 155);
   }
 }
   public void settings() {  size(1500, 500);  smooth(); }

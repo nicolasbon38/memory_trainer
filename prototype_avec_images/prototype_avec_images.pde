@@ -13,6 +13,10 @@ boolean defilement_actif = false;
 
 Train le_train;
 
+TextBox la_textbox;
+
+String reponse = "";
+
 
 class Image{
   String nom;
@@ -75,8 +79,8 @@ class Image{
       // largeur = DIMENSION / 4;
     //On recouvre l'image précédente
     noStroke();
-    rect(x - 1, y - 1, largeur + 2, largeur + 2);
     fill(255);
+    rect(x - 1, y - 1, largeur + 2, largeur + 2);
     float dx = floor(les_spots[rang + 1][0] - les_spots[rang][0]) / 30;
     float dy = (les_spots[rang + 1][1] - les_spots[rang][1]) / 30;
     float dl = (les_spots[rang + 1][2] - les_spots[rang][2]) / 30;
@@ -138,6 +142,7 @@ void setup(){
   size(1500, 500);
   le_train = new Train(path_dossier);
   le_train.initialise_affichage();
+  la_textbox = new TextBox();
 }
 
 
@@ -146,10 +151,14 @@ void draw(){
     le_train.defile();
   };
   le_train.train_display();
+  la_textbox.display();
+
 }
 
 void keyPressed(){
-  if (key == 'a'){
+  if (key == ENTER){
     defilement_actif = true;
+    reponse = "";
   }
+  reponse = reponse + String.valueOf(key);
 }
